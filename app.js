@@ -5,6 +5,11 @@ require('dotenv').config()
 
 client.on('ready',() => {
   logger.log(`started`.green);
+
+  client.user.setActivity("endlich mit neuen funktionen!", {
+    type: "PLAYING"
+  });
+
   require('./util/commandHandler');
 });
 

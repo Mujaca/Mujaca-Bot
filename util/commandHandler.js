@@ -3,7 +3,6 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { ClientVoiceManager } = require('discord.js');
 const fs = require('fs');
-const { command, args } = require('../commands/ping');
 const client = require('../util/client');
 const logger = require('./logger');
 require('dotenv').config()
