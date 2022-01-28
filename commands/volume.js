@@ -12,11 +12,12 @@ module.exports = {
         storage = {}
     }
 
-    var embed = embedCreator.createEmbed("",`Debug Message; something more usefull will come soon`,"magenta");
+    var embed = embedCreator.createEmbed("",`Changed Volume to ${interaction.options.getNumber("volume")}`,"green");
     player = storage.MusicPlayer;
     if(!player) {
-        return;
-    }
+      interaction.reply({ embeds: [embedCreator.createEmbed("",`The Bot is currently not connected!`,"red")] });
+      return;
+  }
 
     player.setVolume(interaction.options.getNumber("volume") / 100)
     servers.set(interaction.guild.id, storage)

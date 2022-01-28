@@ -12,16 +12,16 @@ module.exports = {
         storage = {}
     }
 
-    var embed = embedCreator.createEmbed("",`Debug Message; something more usefull will come soon`,"magenta");
-
     player = storage.MusicPlayer;
     if(!player) {
+        interaction.reply({ embeds: [embedCreator.createEmbed("",`The Bot is currently not connected!`,"red")] });
         return;
     }
 
     player.singleLoop();
     servers.set(interaction.guild.id, storage)
     
+    var embed = embedCreator.createEmbed("",`${player.singlelooping ? 'The song will be looped!' : 'The song will no longer be looped!'}`,"magenta");
     interaction.reply({ embeds: [embed] });
   }
 }

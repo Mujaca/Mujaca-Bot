@@ -12,12 +12,13 @@ module.exports = {
         storage = {}
     }
 
-    var embed = embedCreator.createEmbed("",`Debug Message; something more usefull will come soon`,"magenta");
+    var embed = embedCreator.createEmbed("",`Disconnecting ...`,"red");
 
     player = storage.MusicPlayer;
     if(!player) {
-        return;
-    }
+      interaction.reply({ embeds: [embedCreator.createEmbed("",`The Bot is currently not connected!`,"red")] });
+      return;
+  }
 
     player.stop();
     delete storage.MusicPlayer;

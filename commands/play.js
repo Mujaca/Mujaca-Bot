@@ -3,7 +3,7 @@ const embedCreator = require('../util/embedBuilder');
 const { joinVoiceChannel, VoiceConnectionStatus, createAudioPlayer, createAudioResource } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
 const fs = require('fs')
-const {MusicPlayer} = require('../functions/musicPlayer')
+const {MusicPlayer, getVideoTitle} = require('../functions/musicPlayer')
 const { servers } = require('../util/storageHelper');
 
 module.exports = {
@@ -16,7 +16,6 @@ module.exports = {
         storage = {}
     }
 
-    var embed = embedCreator.createEmbed("",`Debug Message; something more usefull will come soon`,"magenta");
     var channels = interaction.guild.channels.cache.filter(c => c.isVoice());
     for (const [channelID, channel] of channels) {
         for (const [memberID, member] of channel.members) {
@@ -32,13 +31,21 @@ module.exports = {
                     storage.MusicPlayer = player;
                 }
 
+                var ID = interaction.options.getString("link").replace("https://www.youtube.com/watch?v=", "")
+                var embed = embedCreator.createEmbed("",`${player.current == null ? 'Now playing: ' : 'Added to queue: '} a playlist`,"green");
+                if(ID.includes('www.youtube.com')) {
+                    var title = await getVideoTitle(ID);
+                    embed = embedCreator.createEmbed("",`${player.current == null ? 'Now playing: ' : 'Added to queue: '} ${title}`,"green");
+                }
+
                 player.play(interaction.options.getString("link"))
                 servers.set(interaction.guild.id, storage)
+
                 interaction.reply({ embeds: [embed] });
                 return; 
             }
         }
     }
-    interaction.reply({ embeds: [embedCreator.createEmbed("",`Please join in a Voice Channel to start the Bot!`,"magenta")] });
+    interaction.reply({ embeds: [embedCreator.createEmbed("",`Please join in a Voice Channel to start the Bot!`,"green")] });
   }
 }

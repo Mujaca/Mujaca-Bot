@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, SlashCommandUserOption } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { ClientVoiceManager } = require('discord.js');
 const fs = require('fs');
 const client = require('../util/client');
 const logger = require('./logger');
@@ -39,8 +38,8 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 (async () => {
 	try {
 		await rest.put(
-			//Routes.applicationGuildCommands(client.application.id, process.env.TESTSERVER),
-			Routes.applicationCommands(client.application.id),
+			Routes.applicationGuildCommands(client.application.id, process.env.TESTSERVER),
+			//Routes.applicationCommands(client.application.id),
 			{ body: commands },
 		);
 
